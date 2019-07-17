@@ -148,6 +148,17 @@ public class CaseTest {
         });
     }
     @Test
+    public void should_return_throw_expection_when_give_a_procuratorate_name_repeate() {
+        Procuratorate procuratorate=new Procuratorate();
+        procuratorate.setProcuratorateName("检院1");
+        Procuratorate procuratorate1=new Procuratorate();
+        procuratorate.setProcuratorateName("检院1");
+        Assertions.assertThrows(Exception.class,()->{
+            procuratorateResposity.saveAndFlush(procuratorate);
+            procuratorateResposity.saveAndFlush(procuratorate1);
+        });
+    }
+    @Test
     public void should_return_case_with_procuration_when_give_a_case_id() {
         Case aCase = new Case();
         aCase.setCaseName("案件1");
