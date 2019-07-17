@@ -1,7 +1,11 @@
 package com.tw.apistackbase;
 
 import com.tw.apistackbase.entiey.Case;
+import com.tw.apistackbase.entiey.MainElement;
+import com.tw.apistackbase.entiey.ObjectiveElement;
+import com.tw.apistackbase.entiey.SpecificInformation;
 import com.tw.apistackbase.respository.CaseResposity;
+import com.tw.apistackbase.respository.SpecificInformationResposity;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +27,8 @@ public class CaseTest {
 
      @Autowired
      private CaseResposity caseResposity;
+     @Autowired
+     private SpecificInformationResposity specificInformationResposity;
     @Test
     public void should_return_case_when_give_a_case_id() {
         Case aCase = new Case();
@@ -81,4 +87,22 @@ public class CaseTest {
         List<Case> caseList= caseResposity.findAll();
         Assertions.assertEquals(1,caseList.size());
     }
+
+    @Test
+    public void should_specificinformation_information_when_give_id() {
+        SpecificInformation specificInformation = new SpecificInformation();
+        MainElement mainElement=new MainElement();
+        mainElement.setDesc("main");
+        ObjectiveElement objectiveElement=new ObjectiveElement();
+        objectiveElement.setDesc("object");
+        specificInformation.setMainElement(mainElement);
+        specificInformation.setObjectiveElement(objectiveElement);
+        specificInformationResposity.saveAndFlush(specificInformation);
+
+        List<SpecificInformation> specificInformations=specificInformationResposity.findAllSpecificInformationById(specificInformation.getId());
+
+        Assertions.assertEquals(1,specificInformations.size());
+    }
+
+
 }
