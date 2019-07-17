@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
@@ -26,20 +28,26 @@ public class CaseTest {
         Case aCase = new Case();
         aCase.setCaseName("案件1");
         aCase.setHappenTime(System.currentTimeMillis());
-        caseResposity.saveAndFlush(aCase);
 
+        Assertions.assertThrows(Exception.class,()->{
+            caseResposity.saveAndFlush(aCase);
+        });
         Case case1= caseResposity.findAllCaseById(aCase.getId());
         Assertions.assertEquals(aCase.getId(),case1.getId());
     }
 
     @Test
-    public void should_return_case_when_() {
+    public void should_return_case_when_order_by_happen_time() {
         Case aCase = new Case();
         aCase.setCaseName("案件1");
         aCase.setHappenTime(System.currentTimeMillis());
+        Case aCase1 = new Case();
+        aCase1.setCaseName("案件2");
+        aCase1.setHappenTime(System.currentTimeMillis()+10);
         caseResposity.saveAndFlush(aCase);
+        caseResposity.saveAndFlush(aCase1);
 
-        Case case1= caseResposity.findAllCaseById(aCase.getId());
-        Assertions.assertEquals(aCase.getId(),case1.getId());
+        List<Case> caseList= caseResposity.findByOrderByHappenTimeDesc();
+        Assertions.assertEquals(aCase1.getCaseName(),caseList.get(0).getCaseName());
     }
 }

@@ -1,16 +1,15 @@
 package com.tw.apistackbase.entiey;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Case {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(nullable = false)
     private String caseName;
+    @Column(nullable = false)
     private long happenTime;
 
     public Case() {
