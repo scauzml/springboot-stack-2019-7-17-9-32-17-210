@@ -5,6 +5,7 @@ import com.tw.apistackbase.respository.CaseResposity;
 import com.tw.apistackbase.respository.ProcuratorateResposity;
 import com.tw.apistackbase.respository.ProsecutorsResposity;
 import com.tw.apistackbase.respository.SpecificInformationResposity;
+import org.h2.jdbc.JdbcSQLException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -133,6 +134,19 @@ public class CaseTest {
         Assertions.assertEquals(procuratorate.getId(),procuratorate1.getId());
     }
 
+    @Test
+    public void should_return_throw_expection_when_give_a_procuratorate_name_larger_than_50() {
+        Procuratorate procuratorate=new Procuratorate();
+        procuratorate.setProcuratorateName("检查检查院1检查" +
+                "检查院1检查院1检查院1检查院1检查院1检查院1检查院1" +
+                "检查院1检查院1检查院1检查院1检查院1" +
+                "检查院1检查院1检查院1" +
+                "检查院1检查院1院1检查院1检查院1检查院1检查院1院1");
+
+        Assertions.assertThrows(Exception.class,()->{
+            procuratorateResposity.saveAndFlush(procuratorate);
+        });
+    }
     @Test
     public void should_return_case_with_procuration_when_give_a_case_id() {
         Case aCase = new Case();
