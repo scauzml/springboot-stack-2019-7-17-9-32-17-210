@@ -65,4 +65,20 @@ public class CaseTest {
         List<Case> caseList= caseResposity.findAllCaseByCaseName("案件");
         Assertions.assertEquals(2,caseList.size());
     }
+
+    @Test
+    public void should_delete_case_when_give_id() {
+        Case aCase = new Case();
+        aCase.setCaseName("案件");
+        aCase.setHappenTime(System.currentTimeMillis());
+        Case aCase1 = new Case();
+        aCase1.setCaseName("案件1");
+        aCase1.setHappenTime(System.currentTimeMillis()+10);
+        caseResposity.saveAndFlush(aCase);
+        caseResposity.saveAndFlush(aCase1);
+
+        caseResposity.deleteById(aCase.getId());
+        List<Case> caseList= caseResposity.findAll();
+        Assertions.assertEquals(1,caseList.size());
+    }
 }
