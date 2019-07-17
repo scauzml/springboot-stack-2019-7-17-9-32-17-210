@@ -104,5 +104,23 @@ public class CaseTest {
         Assertions.assertEquals(1,specificInformations.size());
     }
 
+    @Test
+    public void should_return_case_with_sepecificlinformation_when_give_a_case_id() {
+        Case aCase = new Case();
+        aCase.setCaseName("案件1");
+        aCase.setHappenTime(System.currentTimeMillis());
+        SpecificInformation specificInformation = new SpecificInformation();
+        MainElement mainElement=new MainElement();
+        mainElement.setDesc("main");
+        ObjectiveElement objectiveElement=new ObjectiveElement();
+        objectiveElement.setDesc("object");
+        specificInformation.setMainElement(mainElement);
+        specificInformation.setObjectiveElement(objectiveElement);
+        aCase.setSpecificInformation(specificInformation);
+        caseResposity.saveAndFlush(aCase);
+        Case case1= caseResposity.findAllCaseById(aCase.getId());
+        Assertions.assertEquals(aCase.getSpecificInformation().getId(),case1.getSpecificInformation().getId());
+    }
+
 
 }

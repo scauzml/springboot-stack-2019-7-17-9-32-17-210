@@ -11,6 +11,9 @@ public class Case {
     private String caseName;
     @Column(nullable = false)
     private long happenTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private SpecificInformation specificInformation;
+
 
     public Case() {
     }
@@ -44,5 +47,13 @@ public class Case {
 
     public void setHappenTime(long happenTime) {
         this.happenTime = happenTime;
+    }
+
+    public SpecificInformation getSpecificInformation() {
+        return specificInformation;
+    }
+
+    public void setSpecificInformation(SpecificInformation specificInformation) {
+        this.specificInformation = specificInformation;
     }
 }
