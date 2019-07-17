@@ -13,7 +13,9 @@ public class Case {
     private long happenTime;
     @OneToOne(cascade = CascadeType.ALL)
     private SpecificInformation specificInformation;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
+    private Procuratorate procuratorate;
 
     public Case() {
     }
@@ -55,5 +57,13 @@ public class Case {
 
     public void setSpecificInformation(SpecificInformation specificInformation) {
         this.specificInformation = specificInformation;
+    }
+
+    public Procuratorate getProcuratorate() {
+        return procuratorate;
+    }
+
+    public void setProcuratorate(Procuratorate procuratorate) {
+        this.procuratorate = procuratorate;
     }
 }

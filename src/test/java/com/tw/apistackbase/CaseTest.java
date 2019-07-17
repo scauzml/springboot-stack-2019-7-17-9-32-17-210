@@ -127,8 +127,28 @@ public class CaseTest {
         procuratorate.setProcuratorateName("检查院1");
         procuratorateResposity.saveAndFlush(procuratorate);
         Procuratorate procuratorate1= procuratorateResposity.findProcuratorateById(procuratorate.getId());
-
         Assertions.assertEquals(procuratorate.getId(),procuratorate1.getId());
     }
 
+    @Test
+    public void should_return_case_with_procuration_when_give_a_case_id() {
+        Case aCase = new Case();
+        aCase.setCaseName("案件1");
+        aCase.setHappenTime(System.currentTimeMillis());
+        SpecificInformation specificInformation = new SpecificInformation();
+        MainElement mainElement=new MainElement();
+        mainElement.setDesc("main");
+        ObjectiveElement objectiveElement=new ObjectiveElement();
+        objectiveElement.setDesc("object");
+        specificInformation.setMainElement(mainElement);
+        specificInformation.setObjectiveElement(objectiveElement);
+        Procuratorate procuratorate=new Procuratorate();
+        procuratorate.setProcuratorateName("检查院1");
+        aCase.setProcuratorate(procuratorate);
+        aCase.setSpecificInformation(specificInformation);
+        caseResposity.saveAndFlush(aCase);
+
+        Case case1= caseResposity.findAllCaseById(aCase.getId());
+        Assertions.assertEquals(aCase.getProcuratorate().getId(),case1.getProcuratorate().getId());
+    }
 }
