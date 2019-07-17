@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -163,4 +164,26 @@ public class CaseTest {
         Prosecutors prosecutors1= prosecutorsResposity.findProsecutorsById(prosecutors.getId());
         Assertions.assertEquals(prosecutors.getId(),prosecutors1.getId());
     }
+
+    @Test
+    public void should_return_Procuratorate_when_give_a_Prosecutors_id() {
+        Procuratorate procuratorate=new Procuratorate();
+        procuratorate.setProcuratorateName("检查院1");
+        Prosecutors prosecutors = new Prosecutors();
+        prosecutors.setProsecutorsName("检察官1");
+        Prosecutors prosecutors1 = new Prosecutors();
+        prosecutors1.setProsecutorsName("检察官2");
+        List<Prosecutors> prosecutorss2 = new ArrayList<>();
+        prosecutorss2.add(prosecutors);
+        prosecutorss2.add(prosecutors1);
+        procuratorate.setProsecutors(prosecutorss2);
+        procuratorateResposity.saveAndFlush(procuratorate);
+
+        Procuratorate procuratorate2= procuratorateResposity.findProcuratorateById(procuratorate.getId());
+
+        Assertions.assertEquals(prosecutors.getId(),procuratorate2.getProsecutors().get(0).getId());
+        Assertions.assertEquals(prosecutors1.getId(),procuratorate2.getProsecutors().get(1).getId());
+
+    }
+
 }
