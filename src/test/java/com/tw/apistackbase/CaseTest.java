@@ -50,4 +50,19 @@ public class CaseTest {
         List<Case> caseList= caseResposity.findByOrderByHappenTimeDesc();
         Assertions.assertEquals(aCase1.getCaseName(),caseList.get(0).getCaseName());
     }
+
+    @Test
+    public void should_return_case_when_give_case_name() {
+        Case aCase = new Case();
+        aCase.setCaseName("案件");
+        aCase.setHappenTime(System.currentTimeMillis());
+        Case aCase1 = new Case();
+        aCase1.setCaseName("案件");
+        aCase1.setHappenTime(System.currentTimeMillis()+10);
+        caseResposity.saveAndFlush(aCase);
+        caseResposity.saveAndFlush(aCase1);
+
+        List<Case> caseList= caseResposity.findAllCaseByCaseName("案件");
+        Assertions.assertEquals(2,caseList.size());
+    }
 }

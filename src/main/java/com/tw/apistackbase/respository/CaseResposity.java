@@ -10,4 +10,6 @@ public interface CaseResposity extends JpaRepository<Case,Integer> {
      Case findAllCaseById(int id);
 
      List<Case> findByOrderByHappenTimeDesc();
+
+     List<Case> findAllCaseByCaseName(String caseName);
 }
