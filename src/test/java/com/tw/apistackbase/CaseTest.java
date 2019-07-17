@@ -1,10 +1,8 @@
 package com.tw.apistackbase;
 
-import com.tw.apistackbase.entiey.Case;
-import com.tw.apistackbase.entiey.MainElement;
-import com.tw.apistackbase.entiey.ObjectiveElement;
-import com.tw.apistackbase.entiey.SpecificInformation;
+import com.tw.apistackbase.entiey.*;
 import com.tw.apistackbase.respository.CaseResposity;
+import com.tw.apistackbase.respository.ProcuratorateResposity;
 import com.tw.apistackbase.respository.SpecificInformationResposity;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +27,8 @@ public class CaseTest {
      private CaseResposity caseResposity;
      @Autowired
      private SpecificInformationResposity specificInformationResposity;
+     @Autowired
+     private ProcuratorateResposity procuratorateResposity;
     @Test
     public void should_return_case_when_give_a_case_id() {
         Case aCase = new Case();
@@ -121,6 +121,14 @@ public class CaseTest {
         Case case1= caseResposity.findAllCaseById(aCase.getId());
         Assertions.assertEquals(aCase.getSpecificInformation().getId(),case1.getSpecificInformation().getId());
     }
+    @Test
+    public void should_return_Procuratorate_when_give_a_procuratorate_id() {
+        Procuratorate procuratorate=new Procuratorate();
+        procuratorate.setProcuratorateName("检查院1");
+        procuratorateResposity.saveAndFlush(procuratorate);
+        Procuratorate procuratorate1= procuratorateResposity.findProcuratorateById(procuratorate.getId());
 
+        Assertions.assertEquals(procuratorate.getId(),procuratorate1.getId());
+    }
 
 }
