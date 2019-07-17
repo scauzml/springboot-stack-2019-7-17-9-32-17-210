@@ -3,13 +3,13 @@ package com.tw.apistackbase;
 import com.tw.apistackbase.entiey.*;
 import com.tw.apistackbase.respository.CaseResposity;
 import com.tw.apistackbase.respository.ProcuratorateResposity;
+import com.tw.apistackbase.respository.ProsecutorsResposity;
 import com.tw.apistackbase.respository.SpecificInformationResposity;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -29,6 +29,8 @@ public class CaseTest {
      private SpecificInformationResposity specificInformationResposity;
      @Autowired
      private ProcuratorateResposity procuratorateResposity;
+     @Autowired
+     private ProsecutorsResposity prosecutorsResposity;
     @Test
     public void should_return_case_when_give_a_case_id() {
         Case aCase = new Case();
@@ -150,5 +152,15 @@ public class CaseTest {
 
         Case case1= caseResposity.findAllCaseById(aCase.getId());
         Assertions.assertEquals(aCase.getProcuratorate().getId(),case1.getProcuratorate().getId());
+    }
+
+    @Test
+    public void should_return_Prosecutors_when_give_a_Prosecutors_id() {
+        Prosecutors prosecutors = new Prosecutors();
+        prosecutors.setProsecutorsName("检察官1");
+        prosecutorsResposity.saveAndFlush(prosecutors);
+
+        Prosecutors prosecutors1= prosecutorsResposity.findProsecutorsById(prosecutors.getId());
+        Assertions.assertEquals(prosecutors.getId(),prosecutors1.getId());
     }
 }
