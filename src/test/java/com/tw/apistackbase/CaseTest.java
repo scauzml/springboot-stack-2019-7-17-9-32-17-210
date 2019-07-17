@@ -159,6 +159,14 @@ public class CaseTest {
         });
     }
     @Test
+    public void should_return_throw_expection_when_give_a_procuratorate_name_is_null() {
+        Procuratorate procuratorate=new Procuratorate();
+
+        Assertions.assertThrows(Exception.class,()->{
+            procuratorateResposity.saveAndFlush(procuratorate);
+        });
+    }
+    @Test
     public void should_return_case_with_procuration_when_give_a_case_id() {
         Case aCase = new Case();
         aCase.setCaseName("案件1");
